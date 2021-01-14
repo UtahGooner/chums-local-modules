@@ -41,8 +41,8 @@ This is used on a variety of node.js server instance for standard tasks.
             returns profile object {user, roles, accounts}
     
 ### General Utils
-    getCompany(string company) 
+    getCompany(company = '') 
         - return chums|bc from company code
 
-    getSageCompany(string company) 
+    getSageCompany(company = '') 
         - returns CHI|BCS from company string
