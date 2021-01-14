@@ -1,16 +1,23 @@
+![Chums Logo](https://intranet.chums.com/images/chums/chums-badge-120x120.png)
 # CHUMS Local API Modules
-
 This is used on a variety of node.js server instance for standard tasks.
 
 ## Required Environment Variables
-    DEBUG (optional)    - default: chums:*
-    MYSQL_POOL_LIMIT    - default: 5
-    MYSQL_SERVER
-    MYSQL_USERNAME
-    MYSQL_PASSWORD
-    MYSQL_DB
-    JWT_SECRET
-    JWT_ISSUER
+Module | VARIABLE | Default Value | notes
+--- | --- | --- | ---
+General | DEBUG | chums:*
+MySQL | MYSQL_POOL_LIMIT | 5
+MySQL | MYSQL_SERVER 
+MySQL | MYSQL_USERNAME
+MySQL | MYSQL_PASSWORD
+MySQL | MYSQL_DB
+Authentication | JWT_SECRET
+Authentication | JWT_ISSUER | | Used to validate if locally generated token
+Authentication | INTRANET_API_USERNAME | | used for API calls to /api/user
+Authentication | INTRANET_API_PASSWORD | | used for API calls to /api/user
+Sage100 | SAGE_QUERY_EXECUTABLE | | Required for sageQuery, requires that ODBC connections are established on server
+
+
 
 ## Exports
 ### MySQL
