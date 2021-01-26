@@ -15,4 +15,4 @@ export function validateToken(token: string): Promise<any | Error>;
  * @param {number} exp - Unix Timestamp
  * @returns {boolean}
  */
-export function isBeforeExpiry({ exp }: number): boolean;
+export function isBeforeExpiry({ exp: number }): boolean;
