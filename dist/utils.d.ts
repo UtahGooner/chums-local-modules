@@ -10,3 +10,10 @@ export function getDBCompany(company?: string): string;
  * @returns {string} CHI|BCS|TST|BCT|SUH
  */
 export function getSageCompany(company?: string): string;
+/**
+ *
+ * @param {string} query
+ * @param {Object} [params]
+ * @returns {string}
+ */
+export function parseSQL(query: string, params?: any): string;
