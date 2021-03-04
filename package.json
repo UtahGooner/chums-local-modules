@@ -2,7 +2,7 @@
   "name": "chums-local-modules",
   "version": "1.0.7",
   "description": "modules shared across chums node server instances",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build-ts": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
