@@ -12,11 +12,11 @@
  * @returns {Promise<Error|*>}
  */
 export function apiFetch(url?: string | URL, options?: {
-    headers: {
-        Authorization: string;
+    headers?: {
+        Authorization?: string;
     };
-    cache: string;
-    credentials: string;
-    method: string;
-    referrer: string;
+    cache?: string;
+    credentials?: string;
+    method?: string;
+    referrer?: string;
 }): Promise<Error | any>;

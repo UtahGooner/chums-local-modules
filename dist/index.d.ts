@@ -6,4 +6,5 @@ import { loadValidation } from "./validate-user";
 import { getDBCompany } from "./utils";
 import { getSageCompany } from "./utils";
 import { parseSQL } from "./utils";
-export { mysql2Pool, mysql2Pool as pool, getConnection, validateUser, validateRole, loadValidation, getDBCompany, getSageCompany, parseSQL };
+import { sendEmail } from "./mailer";
+export { mysql2Pool, mysql2Pool as pool, getConnection, validateUser, validateRole, loadValidation, getDBCompany, getSageCompany, parseSQL, sendEmail };
