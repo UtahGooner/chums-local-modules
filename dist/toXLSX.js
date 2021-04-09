@@ -66,7 +66,7 @@ function buildWorkBook(sheets, options) {
 exports.buildWorkBook = buildWorkBook;
 function buildXLSXHeaders(filename) {
     return {
-        'Content-disposition': "attachment; filename=" + filename,
+        'Content-disposition': "attachment; filename=\"" + filename + "\"",
         'Content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     };
 }

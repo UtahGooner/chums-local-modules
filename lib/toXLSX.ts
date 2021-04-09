@@ -55,10 +55,10 @@ export function buildWorkBook(sheets:WorkBookSheets, options:WritingOptions = {}
     return write({SheetNames: sheetNames, Sheets: sheets}, {...defaultOptions, ...options});
 }
 
-export function buildXLSXHeaders(filename: string): { 'Content-disposition': string, 'Content-type':string } {
+export function buildXLSXHeaders(filename: string): { 'Content-Disposition': string, 'Content-Type':string } {
     return {
-        'Content-disposition': `attachment; filename=${filename}`,
-        'Content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     }
 }
 
