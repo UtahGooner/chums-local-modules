@@ -9,6 +9,6 @@ export interface WorkBookSheets {
 export declare function resultToExcelSheet(data: RowDataPacket[], columnNames: ColumnNames, onlyColumnNames: boolean): WorkSheet;
 export declare function buildWorkBook(sheets: WorkBookSheets, options?: WritingOptions): any;
 export declare function buildXLSXHeaders(filename: string): {
-    'Content-disposition': string;
-    'Content-type': string;
+    'Content-Disposition': string;
+    'Content-Type': string;
 };

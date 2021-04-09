@@ -57,7 +57,7 @@ export function buildWorkBook(sheets:WorkBookSheets, options:WritingOptions = {}
 
 export function buildXLSXHeaders(filename: string): { 'Content-Disposition': string, 'Content-Type':string } {
     return {
-        'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Disposition': `attachment; ${filename}`,
         'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     }
 }
