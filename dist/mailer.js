@@ -40,12 +40,6 @@ exports.getLogoImageAttachment = exports.getTs36 = exports.getTs = exports.sendE
 var debug_1 = require("debug");
 var debug = debug_1["default"]('chums:lib:mailer');
 var nodemailer_1 = require("nodemailer");
-// import * as AWS from '@aws-sdk/client-ses';
-//
-// // configure AWS SDK
-// // process.env.AWS_ACCESS_KEY_ID = process.env.AMAZON_SES_USERNAME;
-// // process.env.AWS_SECRET_ACCESS_KEY = process.env.AMAZON_SES_PASSWORD;
-// const sesClient = new AWS.SES({region: process.env.AMAZON_SES_REGION});
 var sendEmail = function (_a) {
     var _b = _a.to, to = _b === void 0 ? [] : _b, _c = _a.cc, cc = _c === void 0 ? [] : _c, _d = _a.bcc, bcc = _d === void 0 ? [] : _d, replyTo = _a.replyTo, from = _a.from, subject = _a.subject, html = _a.html, textContent = _a.textContent, attachments = _a.attachments;
     return __awaiter(void 0, void 0, void 0, function () {
@@ -65,7 +59,7 @@ var sendEmail = function (_a) {
                     }
                     transporter = nodemailer_1.createTransport({
                         host: process.env.AMAZON_SES_HOST,
-                        port: process.env.AMAZON_SES_PORT,
+                        port: Number(process.env.AMAZON_SES_PORT),
                         secure: true,
                         auth: {
                             user: process.env.AMAZON_SES_USERNAME,

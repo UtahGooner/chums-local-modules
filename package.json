@@ -2,7 +2,7 @@
   "name": "chums-local-modules",
   "version": "1.0.7",
   "description": "modules shared across chums node server instances",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build-ts": "tsc",
     "start": "node index.js",
@@ -41,6 +41,6 @@
   },
   "typings": "./dist/index.d.ts",
   "dependencies": {
-    "@aws-sdk/client-ses": "^3.11.0"
+    "xlsx": "^0.16.9"
   }
 }

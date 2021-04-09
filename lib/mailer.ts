@@ -2,12 +2,6 @@ import Debug from 'debug';
 const debug = Debug('chums:lib:mailer');
 
 import {createTransport} from 'nodemailer';
-// import * as AWS from '@aws-sdk/client-ses';
-//
-// // configure AWS SDK
-// // process.env.AWS_ACCESS_KEY_ID = process.env.AMAZON_SES_USERNAME;
-// // process.env.AWS_SECRET_ACCESS_KEY = process.env.AMAZON_SES_PASSWORD;
-// const sesClient = new AWS.SES({region: process.env.AMAZON_SES_REGION});
 interface Address {
     name: string;
     address: string;
@@ -36,12 +30,9 @@ export const sendEmail = async ({to = [], cc = [], bcc = [], replyTo, from, subj
             cc.push(replyTo);
         }
 
-        // Even though there's not a createTransport overload listed the SMTPOptions interface extends
-        // the Options interface that allows for host, port, secure, auth attributes.
-        // @ts-ignore
         const transporter = createTransport({
             host: process.env.AMAZON_SES_HOST,
-            port: process.env.AMAZON_SES_PORT,
+            port: Number(process.env.AMAZON_SES_PORT),
             secure: true,
             auth: {
                 user: process.env.AMAZON_SES_USERNAME,

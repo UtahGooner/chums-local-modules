@@ -1,3 +1,11 @@
+export interface sendMailProps {
+    to: string | string[];
+    cc?: string | string[];
+    bcc?: string | string[];
+    replyTo?: string;
+    from?: string;
+    subject?: string;
+}
 export declare const sendEmail: ({ to, cc, bcc, replyTo, from, subject, html, textContent, attachments }: {
     to?: any[];
     cc?: any[];
