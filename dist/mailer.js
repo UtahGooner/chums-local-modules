@@ -40,6 +40,24 @@ exports.getLogoImageAttachment = exports.getTs36 = exports.getTs = exports.sendE
 var debug_1 = require("debug");
 var debug = debug_1["default"]('chums:lib:mailer');
 var nodemailer_1 = require("nodemailer");
+/**
+ * The following environment variables are required:
+ *     <div>
+ *         <strong>AMAZON_SES_HOST</strong>
+ *         <strong>AMAZON_SES_PORT</strong>
+ *         <strong>AMAZON_SES_USERNAME</strong>
+ *         <strong>AMAZON_SES_PASSWORD</strong>
+ *     </div>
+ * @param {string|string[]} [to]
+ * @param {string|string[]} [cc]
+ * @param {string|string[]} [bcc]
+ * @param {string} replyTo
+ * @param {string} from
+ * @param {string} subject
+ * @param {string} html
+ * @param {string} [textContent]
+ * @param [attachments]
+ */
 var sendEmail = function (_a) {
     var _b = _a.to, to = _b === void 0 ? [] : _b, _c = _a.cc, cc = _c === void 0 ? [] : _c, _d = _a.bcc, bcc = _d === void 0 ? [] : _d, replyTo = _a.replyTo, from = _a.from, subject = _a.subject, html = _a.html, textContent = _a.textContent, attachments = _a.attachments;
     return __awaiter(void 0, void 0, void 0, function () {

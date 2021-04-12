@@ -14,9 +14,30 @@ export interface sendMailProps {
     replyTo?: string,
     from?: string,
     subject?: string,
-
+    html: string,
+    textContent?:string,
+    attachments?: any,
 }
-export const sendEmail = async ({to = [], cc = [], bcc = [], replyTo, from, subject, html, textContent, attachments}) => {
+
+/**
+ * The following environment variables are required:
+ *     <div>
+ *         <strong>AMAZON_SES_HOST</strong>
+ *         <strong>AMAZON_SES_PORT</strong>
+ *         <strong>AMAZON_SES_USERNAME</strong>
+ *         <strong>AMAZON_SES_PASSWORD</strong>
+ *     </div>
+ * @param {string|string[]} [to]
+ * @param {string|string[]} [cc]
+ * @param {string|string[]} [bcc]
+ * @param {string} replyTo
+ * @param {string} from
+ * @param {string} subject
+ * @param {string} html
+ * @param {string} [textContent]
+ * @param [attachments]
+ */
+export const sendEmail = async ({to = [], cc = [], bcc = [], replyTo, from, subject, html, textContent, attachments}:sendMailProps) => {
     try {
         to = !Array.isArray(to) ? [to] : to;
         cc = !Array.isArray(cc) ? [cc] : cc;

@@ -5,18 +5,29 @@ export interface sendMailProps {
     replyTo?: string;
     from?: string;
     subject?: string;
+    html: string;
+    textContent?: string;
+    attachments?: any;
 }
-export declare const sendEmail: ({ to, cc, bcc, replyTo, from, subject, html, textContent, attachments }: {
-    to?: any[];
-    cc?: any[];
-    bcc?: any[];
-    replyTo: any;
-    from: any;
-    subject: any;
-    html: any;
-    textContent: any;
-    attachments: any;
-}) => Promise<any>;
+/**
+ * The following environment variables are required:
+ *     <div>
+ *         <strong>AMAZON_SES_HOST</strong>
+ *         <strong>AMAZON_SES_PORT</strong>
+ *         <strong>AMAZON_SES_USERNAME</strong>
+ *         <strong>AMAZON_SES_PASSWORD</strong>
+ *     </div>
+ * @param {string|string[]} [to]
+ * @param {string|string[]} [cc]
+ * @param {string|string[]} [bcc]
+ * @param {string} replyTo
+ * @param {string} from
+ * @param {string} subject
+ * @param {string} html
+ * @param {string} [textContent]
+ * @param [attachments]
+ */
+export declare const sendEmail: ({ to, cc, bcc, replyTo, from, subject, html, textContent, attachments }: sendMailProps) => Promise<any>;
 export declare const getTs: () => number;
 export declare const getTs36: () => string;
 /**
