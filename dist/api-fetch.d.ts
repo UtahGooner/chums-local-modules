@@ -11,12 +11,12 @@
  * @param {String} [options.referrer]
  * @returns {Promise<Error|*>}
  */
-export function apiFetch(url?: string | URL, options?: {
+export function apiFetch(url?: string | any, options?: {
     headers?: {
-        Authorization?: string;
-    };
-    cache?: string;
-    credentials?: string;
-    method?: string;
-    referrer?: string;
+        Authorization?: string | undefined;
+    } | undefined;
+    cache?: string | undefined;
+    credentials?: string | undefined;
+    method?: string | undefined;
+    referrer?: string | undefined;
 }): Promise<Error | any>;

@@ -12,7 +12,7 @@ export interface WorkBookSheets {
 }
 
 export function resultToExcelSheet(data:RowDataPacket[], columnNames:ColumnNames, onlyColumnNames:boolean):WorkSheet {
-    let rows = [];
+    let rows:any[] = [];
     let fields:string[] = [];
     let columns:string[] = [];
     if (onlyColumnNames) {

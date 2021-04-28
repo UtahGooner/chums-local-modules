@@ -16,4 +16,4 @@ export function getSageCompany(company?: string): string;
  * @param {Object} [params]
  * @returns {string}
  */
-export function parseSQL(query: string, params?: any): string;
+export function parseSQL(query: string, params?: Object | undefined): string;

@@ -8,7 +8,7 @@
  * @param {function} next
  * @returns {Promise<void>}
  */
-export function validateUser(req: any, res: any, next: Function): Promise<void>;
+export function validateUser(req: Object, res: Object, next: Function): Promise<void>;
 /**
  * Validates a user role, stored in res.locals.profile.roles
  *  - On success executes next()
@@ -25,7 +25,7 @@ export function validateRole(validRoles?: string | string[]): (arg0: any, arg1: 
  * @param {Object} req - Express request object
  * @returns {Promise<{valid: boolean, profile: {roles: [], accounts: [], user}}|*>}
  */
-export function loadValidation(req: any): Promise<{
+export function loadValidation(req: Object): Promise<{
     valid: boolean;
     profile: {
         roles: [];

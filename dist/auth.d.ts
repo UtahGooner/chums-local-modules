@@ -1,7 +1,7 @@
-export function basicAuth(req: any): {
+export function basicAuth(req: Object): {
     pass: string | null;
     user: string | null;
 };
-export function jwtToken(req: any): {
+export function jwtToken(req: Object): {
     token: null | string;
 };

@@ -9,7 +9,7 @@ export function isLocalToken(token: string): boolean;
  * @param {String} token - A JWT token to be validated
  * @return {Promise<Object|Error>}
  */
-export function validateToken(token: string): Promise<any | Error>;
+export function validateToken(token: string): Promise<Object | Error>;
 /**
  * Validates a token expiration timestamp
  * @param {number} exp - Unix Timestamp

@@ -1,14 +1,14 @@
-var namedPlaceholders = require('named-placeholders')();
-var SqlString = require('sqlstring');
+"use strict";
+const namedPlaceholders = require('named-placeholders')();
+const SqlString = require('sqlstring');
 /**
  *
  * @param {string} query
  * @param {Object} [params]
  * @returns {string}
  */
-function parseSQL(query, params) {
-    if (params === void 0) { params = {}; }
-    var prepared = namedPlaceholders(query, params || {});
+function parseSQL(query, params = {}) {
+    const prepared = namedPlaceholders(query, params || {});
     return SqlString.format(prepared[0], prepared[1]);
 }
 /**
@@ -16,8 +16,7 @@ function parseSQL(query, params) {
  * @param {String} company - Sage Company Code
  * @returns {String} chums|bc
  */
-function getDBCompany(company) {
-    if (company === void 0) { company = ''; }
+function getDBCompany(company = '') {
     switch (String(company).toUpperCase()) {
         case 'CHI':
         case 'CHUMS':
@@ -34,8 +33,7 @@ function getDBCompany(company) {
  * @param {string} company
  * @returns {string} CHI|BCS|TST|BCT|SUH
  */
-function getSageCompany(company) {
-    if (company === void 0) { company = 'chums'; }
+function getSageCompany(company = 'chums') {
     switch (String(company).toLowerCase()) {
         case 'chums':
         case 'chi':

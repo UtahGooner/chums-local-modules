@@ -1,15 +1,16 @@
-var debug = require('debug')('chums:local-modules:jwt-handler');
-var jwt = require('jsonwebtoken');
-var _a = process.env, JWT_ISSUER = _a.JWT_ISSUER, JWT_SECRET = _a.JWT_SECRET;
-var ERR_TOKEN_EXPIRED = 'TokenExpiredError';
+"use strict";
+const debug = require('debug')('chums:local-modules:jwt-handler');
+const jwt = require('jsonwebtoken');
+const { JWT_ISSUER, JWT_SECRET } = process.env;
+const ERR_TOKEN_EXPIRED = 'TokenExpiredError';
 /**
  * Validates a JTW Token
  * @param {String} token - A JWT token to be validated
  * @return {Promise<Object|Error>}
  */
-var validateToken = function (token) {
-    return new Promise(function (resolve, reject) {
-        jwt.verify(token, JWT_SECRET, {}, function (err, decoded) {
+const validateToken = (token) => {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, JWT_SECRET, {}, (err, decoded) => {
             if (!err) {
                 return resolve(decoded);
             }
@@ -26,9 +27,8 @@ var validateToken = function (token) {
  * @param {number} exp - Unix Timestamp
  * @returns {boolean}
  */
-var isBeforeExpiry = function (_a) {
-    var exp = _a.exp;
-    var now = new Date().valueOf() / 1000;
+const isBeforeExpiry = ({ exp }) => {
+    const now = new Date().valueOf() / 1000;
     return !!exp && exp > now;
 };
 /**
@@ -36,11 +36,11 @@ var isBeforeExpiry = function (_a) {
  * @param {String} token
  * @return {boolean}
  */
-var isLocalToken = function (token) {
+const isLocalToken = (token) => {
     if (!token || String(token).toLowerCase() === 'null') {
         return false;
     }
-    var _a = jwt.decode(token).iss, iss = _a === void 0 ? '' : _a;
+    const { iss = '' } = jwt.decode(token);
     return !!iss && iss === JWT_ISSUER;
 };
 exports.isLocalToken = isLocalToken;
