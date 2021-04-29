@@ -1,7 +1,18 @@
-export function basicAuth(req: Object): {
-    pass: string | null;
+import { Request } from 'express';
+export interface BasicAuth {
     user: string | null;
-};
-export function jwtToken(req: Object): {
-    token: null | string;
-};
+    pass: string | null;
+}
+/**
+ * Gets a user, password from http basic authorization header
+ * @param {Object} req - Express Request object
+ * @returns {{pass: string|null, user: string|null}}
+ */
+export declare const basicAuth: (req: Request) => BasicAuth;
+export interface JWTAuth {
+    token: string | null;
+}
+/**
+ * Gets a token from a http bearer authorization
+ */
+export declare const jwtToken: (req: Request) => JWTAuth;

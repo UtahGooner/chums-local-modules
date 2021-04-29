@@ -1,3 +1,2 @@
-export const mysql2Pool: mysql2.Pool;
-export function getConnection(): Promise<mysql2.Connection>;
-import mysql2 = require("mysql2/promise");
+export declare function getConnection(): Promise<any>;
+export declare const mysql2Pool: any;

@@ -19,13 +19,15 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.mysql2Pool = exports.getConnection = void 0;
 const mysql2 = require('mysql2/promise');
 const config = {
     connectionLimit: process.env.MYSQL_POOL_LIMIT || 5,
-    host: process.env.MYSQL_SERVER,
-    user: process.env.MYSQL_USERNAME,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DB,
+    host: process.env.MYSQL_SERVER || '',
+    user: process.env.MYSQL_USERNAME || '',
+    password: process.env.MYSQL_PASSWORD || '',
+    database: process.env.MYSQL_DB || '',
     namedPlaceholders: true,
 };
 function getConnection() {
@@ -34,6 +36,5 @@ function getConnection() {
         return mysql2.createConnection(Object.assign({}, connectionConfig));
     });
 }
-const mysql2Pool = mysql2.createPool(Object.assign(Object.assign({}, config), { namedPlaceholders: true }));
-exports.mysql2Pool = mysql2Pool;
 exports.getConnection = getConnection;
+exports.mysql2Pool = mysql2.createPool(Object.assign({}, config));

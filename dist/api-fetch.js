@@ -8,28 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const fetch = require('node-fetch');
-const debug = require('debug')('chums:local-modules:api-fetch');
-const { INTRANET_API_USERNAME, INTRANET_API_PASSWORD } = process.env;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.apiFetch = void 0;
+const debug_1 = require("debug");
+const node_fetch_1 = require("node-fetch");
+const url_1 = require("url");
+const debug = debug_1.default('chums:local-modules:api-fetch');
+const { INTRANET_API_USERNAME = '', INTRANET_API_PASSWORD = '' } = process.env;
 const LOCAL_HOSTNAMES = ['localhost', 'intranet.chums.com'];
-/**
- * Makes a request to an API, defaults to chums intranet API if not including options.headers.Authorization
- *
- * @param {String|URL} url
- * @param {Object} options
- * @param {Object} [options.headers]
- * @param {String} [options.headers.Authorization]
- * @param {String} [options.cache]
- * @param {String} [options.credentials]
- * @param {String} [options.method]
- * @param {String} [options.referrer]
- * @returns {Promise<Error|*>}
- */
 function apiFetch(url = '', options = {}) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             if (typeof url === 'string') {
-                url = new URL(url, 'https://intranet.chums.com/');
+                url = new url_1.URL(url, 'https://intranet.chums.com/');
             }
             if (!options.headers) {
                 options.headers = {};
@@ -46,7 +37,7 @@ function apiFetch(url = '', options = {}) {
                 const auth = Buffer.from(`${INTRANET_API_USERNAME}:${INTRANET_API_PASSWORD}`).toString('base64');
                 options.headers.Authorization = `Basic ${auth}`;
             }
-            return yield fetch(url, options);
+            return yield node_fetch_1.default(url, options);
         }
         catch (err) {
             debug("get()", err.message);

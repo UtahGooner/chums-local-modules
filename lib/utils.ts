@@ -1,14 +1,10 @@
 const namedPlaceholders = require('named-placeholders')();
 const SqlString = require('sqlstring');
 
-
-/**
- *
- * @param {string} query
- * @param {Object} [params]
- * @returns {string}
- */
-function parseSQL(query, params = {}) {
+export interface ParseSQLParams {
+    [key:string]: any,
+}
+export function parseSQL(query:string, params:ParseSQLParams = {}):string {
     const prepared = namedPlaceholders(query, params || {});
     return SqlString.format(prepared[0], prepared[1]);
 }
@@ -19,7 +15,7 @@ function parseSQL(query, params = {}) {
  * @param {String} company - Sage Company Code
  * @returns {String} chums|bc
  */
-function getDBCompany(company = '') {
+export function getDBCompany(company:string = ''):string {
     switch (String(company).toUpperCase()) {
     case 'CHI':
     case 'CHUMS':
@@ -37,7 +33,7 @@ function getDBCompany(company = '') {
  * @param {string} company
  * @returns {string} CHI|BCS|TST|BCT|SUH
  */
-function getSageCompany(company = 'chums') {
+export function getSageCompany(company:string = 'chums'):string {
     switch (String(company).toLowerCase()) {
     case 'chums':
     case 'chi':
@@ -55,7 +51,3 @@ function getSageCompany(company = 'chums') {
         return 'CHI';
     }
 }
-
-exports.getDBCompany = getDBCompany;
-exports.getSageCompany = getSageCompany;
-exports.parseSQL = parseSQL;

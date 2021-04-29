@@ -8,32 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const debug = require('debug')('chums:local-modules:validate-user-account');
-const { apiFetch } = require('./api-fetch');
-const utils = require('./utils');
+Object.defineProperty(exports, "__esModule", { value: true });
+const debug_1 = require("debug");
+const debug = debug_1.default('chums:local-modules:validate-user-account');
+const api_fetch_1 = require("./api-fetch");
+const utils_1 = require("./utils");
 const VALIDATE_URL = '/api/user/:id/validate/account/:Company/:ARDivisionNo-:CustomerNo';
-/**
- *
- * @param {string|number} id - User ID
- * @param {string} Company
- * @param {string} ARDivisionNo
- * @param {string} CustomerNo
- * @returns {Promise<boolean>}
- */
 function validateUserAccount({ id, Company, ARDivisionNo, CustomerNo }) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const url = VALIDATE_URL
                 .replace(':id', encodeURIComponent(id))
-                .replace(':Company', encodeURIComponent(utils.getDBCompany(Company)))
+                .replace(':Company', encodeURIComponent(utils_1.getDBCompany(Company)))
                 .replace(':ARDivisionNo', encodeURIComponent(ARDivisionNo))
                 .replace(':CustomerNo', encodeURIComponent(CustomerNo));
-            const res = yield apiFetch(url, { referrer: 'chums:base:validate-user' });
+            const res = yield api_fetch_1.apiFetch(url, { referrer: 'chums:local-modules:validate-user' });
             if (!res.ok) {
                 debug('validateAccount()', res.status, res.statusText);
                 return Promise.reject(new Error(`Error ${res.status}: ${res.statusText}`));
             }
-            const { success = false } = yield res.json();
+            const { success } = yield res.json();
             return success === true;
         }
         catch (err) {

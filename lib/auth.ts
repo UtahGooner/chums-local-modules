@@ -1,12 +1,18 @@
+import {Request} from 'express';
 'use strict';
+
+export interface BasicAuth {
+    user: string|null,
+    pass: string|null,
+}
 
 /**
  * Gets a user, password from http basic authorization header
  * @param {Object} req - Express Request object
  * @returns {{pass: string|null, user: string|null}}
  */
-exports.basicAuth = (req) => {
-    const nullUser = {user: null, pass: null};
+export const basicAuth = (req:Request):BasicAuth => {
+    const nullUser:BasicAuth = {user: null, pass: null};
     const authorization = req.header('authorization');
 
     if (!authorization) {
@@ -23,13 +29,16 @@ exports.basicAuth = (req) => {
     return {user, pass};
 };
 
+export interface JWTAuth {
+    token: string|null,
+}
+
 /**
  * Gets a token from a http bearer authorization
- * @param {Object} req - Express Request object
- * @returns {{token: null|string}}
  */
-exports.jwtToken = (req) => {
-    const nullToken = {token: null};
+export const jwtToken = (req:Request):JWTAuth => {
+    const nullToken:JWTAuth = {token: null};
+
     const authorization = req.header('authorization')
     if (!authorization) {
         return nullToken;

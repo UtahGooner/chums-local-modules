@@ -1,7 +1,10 @@
-const fetch = require('node-fetch');
-const debug = require('debug')('chums:local-modules:api-fetch');
+import Debug from 'debug';
+import fetch from 'node-fetch';
+import {URL} from 'url'
 
-const {INTRANET_API_USERNAME, INTRANET_API_PASSWORD} = process.env;
+const debug = Debug('chums:local-modules:api-fetch');
+
+const {INTRANET_API_USERNAME = '', INTRANET_API_PASSWORD = ''} = process.env;
 const LOCAL_HOSTNAMES = ['localhost', 'intranet.chums.com'];
 
 /**
@@ -11,13 +14,22 @@ const LOCAL_HOSTNAMES = ['localhost', 'intranet.chums.com'];
  * @param {Object} options
  * @param {Object} [options.headers]
  * @param {String} [options.headers.Authorization]
- * @param {String} [options.cache]
- * @param {String} [options.credentials]
  * @param {String} [options.method]
  * @param {String} [options.referrer]
  * @returns {Promise<Error|*>}
  */
-async function apiFetch(url = '', options = {}) {
+
+export interface APIFetchOptions {
+    headers?: {
+        Authorization?: string,
+        'Content-Type'?: string
+        referrer?: string,
+    },
+    method?: string,
+    referrer?: string,
+}
+
+export async function apiFetch(url: string | URL = '', options: APIFetchOptions = {}) {
     try {
         if (typeof url === 'string') {
             url = new URL(url, 'https://intranet.chums.com/');
@@ -25,6 +37,7 @@ async function apiFetch(url = '', options = {}) {
         if (!options.headers) {
             options.headers = {};
         }
+
         if (!options.headers['Content-Type']) {
             options.headers['Content-Type'] = 'application/json';
         }
@@ -38,10 +51,9 @@ async function apiFetch(url = '', options = {}) {
             options.headers.Authorization = `Basic ${auth}`;
         }
         return await fetch(url, options);
-    } catch(err) {
+    } catch (err) {
         debug("get()", err.message);
         return Promise.reject(err);
     }
 }
 
-exports.apiFetch = apiFetch;

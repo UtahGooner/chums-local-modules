@@ -6,4 +6,9 @@
  * @param {string} CustomerNo
  * @returns {Promise<boolean>}
  */
-export function validateUserAccount({ id, Company, ARDivisionNo, CustomerNo }: string | number): Promise<boolean>;
+export interface ValidateUserAccountProps {
+    id: string | number;
+    Company: string;
+    ARDivisionNo: string;
+    CustomerNo: string;
+}

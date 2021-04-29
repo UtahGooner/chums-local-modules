@@ -1,16 +1,13 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getSageCompany = exports.getDBCompany = exports.parseSQL = void 0;
 const namedPlaceholders = require('named-placeholders')();
 const SqlString = require('sqlstring');
-/**
- *
- * @param {string} query
- * @param {Object} [params]
- * @returns {string}
- */
 function parseSQL(query, params = {}) {
     const prepared = namedPlaceholders(query, params || {});
     return SqlString.format(prepared[0], prepared[1]);
 }
+exports.parseSQL = parseSQL;
 /**
  * Returns a valid database company for use in database company fields
  * @param {String} company - Sage Company Code
@@ -28,6 +25,7 @@ function getDBCompany(company = '') {
             return 'chums';
     }
 }
+exports.getDBCompany = getDBCompany;
 /**
  * Returns a valid Sage Company code
  * @param {string} company
@@ -51,6 +49,4 @@ function getSageCompany(company = 'chums') {
             return 'CHI';
     }
 }
-exports.getDBCompany = getDBCompany;
 exports.getSageCompany = getSageCompany;
-exports.parseSQL = parseSQL;

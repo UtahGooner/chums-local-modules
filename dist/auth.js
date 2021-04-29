@@ -1,10 +1,12 @@
 'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.jwtToken = exports.basicAuth = void 0;
 /**
  * Gets a user, password from http basic authorization header
  * @param {Object} req - Express Request object
  * @returns {{pass: string|null, user: string|null}}
  */
-exports.basicAuth = (req) => {
+const basicAuth = (req) => {
     const nullUser = { user: null, pass: null };
     const authorization = req.header('authorization');
     if (!authorization) {
@@ -18,12 +20,11 @@ exports.basicAuth = (req) => {
     const [user = null, pass = null] = Buffer.from(credentials.trim(), 'base64').toString().split(':');
     return { user, pass };
 };
+exports.basicAuth = basicAuth;
 /**
  * Gets a token from a http bearer authorization
- * @param {Object} req - Express Request object
- * @returns {{token: null|string}}
  */
-exports.jwtToken = (req) => {
+const jwtToken = (req) => {
     const nullToken = { token: null };
     const authorization = req.header('authorization');
     if (!authorization) {
@@ -35,3 +36,4 @@ exports.jwtToken = (req) => {
     }
     return { token };
 };
+exports.jwtToken = jwtToken;
