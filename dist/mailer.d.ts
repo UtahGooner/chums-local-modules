@@ -40,6 +40,5 @@ export declare const getLogoImageAttachment: (ts?: string) => {
     path: string;
     cid: string;
 };
-export declare const sendSESEmail: ({ to, cc, bcc, replyTo, from, subject, html, textContent, attachments }: sendMailProps) => Promise<import("@aws-sdk/client-ses").SendEmailCommandOutput>;
 export declare const sendGmail: ({ to, cc, bcc, replyTo, from, subject, html, textContent, attachments }: sendMailProps) => Promise<any>;
 export declare const sendEmail: ({ to, cc, bcc, replyTo, from, subject, html, textContent, attachments }: sendMailProps) => Promise<any>;

@@ -2,11 +2,11 @@ import Debug from 'debug';
 const debug = Debug('chums:lib:mailer');
 
 import {createTransport} from 'nodemailer';
-import {SES, SESClient, CloneReceiptRuleSetCommand} from '@aws-sdk/client-ses';
-import {SignatureV4, getSigningKey} from '@aws-sdk/signature-v4';
-import {SendEmailCommandInput} from "@aws-sdk/client-ses/commands/SendEmailCommand";
-import {Credentials} from "aws-sdk";
-import {createHmac} from 'crypto';
+// import {SES, SESClient, CloneReceiptRuleSetCommand} from '@aws-sdk/client-ses';
+// import {SignatureV4, getSigningKey} from '@aws-sdk/signature-v4';
+// import {SendEmailCommandInput} from "@aws-sdk/client-ses/commands/SendEmailCommand";
+// import {Credentials} from "aws-sdk";
+// import {createHmac} from 'crypto';
 
 interface Address {
     name: string;
@@ -112,57 +112,57 @@ export const getLogoImageAttachment = (ts = getTs36()) => {
     };
 };
 
-export const sendSESEmail = async ({to = [], cc = [], bcc = [], replyTo, from, subject, html, textContent, attachments}:sendMailProps) => {
-    if (!from) {
-        from = `"Chums AutoMailer" <automated@chums.com>`;
-    }
-    if (!Array.isArray(to)) {
-        to = [to];
-    }
-    if (!Array.isArray(cc)) {
-        cc = [cc];
-    }
-    if (!Array.isArray(bcc)) {
-        bcc = [bcc];
-    }
-    if (!textContent) {
-        textContent = '';
-    }
-
-    process.env.AWS_ACCESS_KEY_ID = process.env.AMAZON_SES_USERNAME;
-    process.env.AWS_SECRET_ACCESS_KEY  = process.env.AMAZON_SES_PASSWORD;
-
-
-    const credentials = new Credentials({accessKeyId: process.env.AMAZON_SES_USERNAME || '', secretAccessKey: process.env.AMAZON_SES_PASSWORD || ''});
-
-
-
-    const ses = new SES({
-        region: process.env.AMAZON_SES_REGION,
-        credentials: credentials,
-    });
-    const params:SendEmailCommandInput = {
-        Source: from,
-        Destination: {
-            ToAddresses: to,
-            CcAddresses: cc,
-            BccAddresses: bcc,
-        },
-        Message: {
-            Subject: {Data: subject},
-            Body: {
-                Text: {Data: textContent},
-                Html: {Data: html},
-            }
-        }
-    }
-    // const command = new CloneReceiptRuleSetCommand(params)
-
-    const response = await ses.sendEmail(params);
-    debug('sendSESEmail()', response);
-    return response;
-
-}
+// export const sendSESEmail = async ({to = [], cc = [], bcc = [], replyTo, from, subject, html, textContent, attachments}:sendMailProps) => {
+//     if (!from) {
+//         from = `"Chums AutoMailer" <automated@chums.com>`;
+//     }
+//     if (!Array.isArray(to)) {
+//         to = [to];
+//     }
+//     if (!Array.isArray(cc)) {
+//         cc = [cc];
+//     }
+//     if (!Array.isArray(bcc)) {
+//         bcc = [bcc];
+//     }
+//     if (!textContent) {
+//         textContent = '';
+//     }
+//
+//     process.env.AWS_ACCESS_KEY_ID = process.env.AMAZON_SES_USERNAME;
+//     process.env.AWS_SECRET_ACCESS_KEY  = process.env.AMAZON_SES_PASSWORD;
+//
+//
+//     const credentials = new Credentials({accessKeyId: process.env.AMAZON_SES_USERNAME || '', secretAccessKey: process.env.AMAZON_SES_PASSWORD || ''});
+//
+//
+//
+//     const ses = new SES({
+//         region: process.env.AMAZON_SES_REGION,
+//         credentials: credentials,
+//     });
+//     const params:SendEmailCommandInput = {
+//         Source: from,
+//         Destination: {
+//             ToAddresses: to,
+//             CcAddresses: cc,
+//             BccAddresses: bcc,
+//         },
+//         Message: {
+//             Subject: {Data: subject},
+//             Body: {
+//                 Text: {Data: textContent},
+//                 Html: {Data: html},
+//             }
+//         }
+//     }
+//     // const command = new CloneReceiptRuleSetCommand(params)
+//
+//     const response = await ses.sendEmail(params);
+//     debug('sendSESEmail()', response);
+//     return response;
+//
+// }
 
 
 export const sendGmail  = async ({to = [], cc = [], bcc = [], replyTo, from, subject, html, textContent, attachments}:sendMailProps) => {
