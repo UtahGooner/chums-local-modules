@@ -176,6 +176,7 @@ const sendGmail = ({ to = [], cc = [], bcc = [], replyTo, from, subject, html, t
             text: textContent,
             attachments
         };
+        debug('sendGmail()', { to, from, subject, replyTo });
         // return mailOptions;
         return yield transporter.sendMail(mailOptions);
     }

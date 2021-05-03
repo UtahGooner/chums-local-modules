@@ -199,6 +199,7 @@ export const sendGmail  = async ({to = [], cc = [], bcc = [], replyTo, from, sub
             text: textContent,
             attachments
         };
+        debug('sendGmail()', {to, from, subject, replyTo});
 
         // return mailOptions;
         return await transporter.sendMail(mailOptions);
