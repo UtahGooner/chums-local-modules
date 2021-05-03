@@ -51,7 +51,7 @@ function buildWorkBook(sheets, options = {}) {
 exports.buildWorkBook = buildWorkBook;
 function buildXLSXHeaders(filename) {
     return {
-        'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Disposition': `attachment; filename=${filename.replace(/[\s]+/g, '_')}`,
         'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     };
 }
