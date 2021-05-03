@@ -1,5 +1,5 @@
 require('dotenv').config();
-const {sendEmail} = require('./dist/mailer');
+const {sendEmail, sendSESEmail, sendGmail} = require('./dist/mailer');
 const debug = require('debug')('chums:test:test-email');
 
 
@@ -10,7 +10,7 @@ async function testEmail() {
         const replyTo = 'it@chums.com';
         const subject = 'AWS SES Test';
         const html = '<div>This is a test <strong>again?</strong></div>';
-        const result = await sendEmail({
+        const result = await sendGmail({
             to, replyTo, from, subject, html
         });
         debug('testEmail()', result);
