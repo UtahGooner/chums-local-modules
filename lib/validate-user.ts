@@ -12,6 +12,7 @@ import {validateToken, isBeforeExpiry} from './jwt-handler';
 /**
  * Requests validation from CHUMS /api/user service
  * - On success populates res.locals.profile = {user, roles, accounts} and executes next()
+ * - On success populates req.userAuth = {valid, status, profile}
  * - On failure sends status 401 {error: 401, status: 'StatusText'}
  *
  * @param {Object} req - Express request object
@@ -26,6 +27,7 @@ export async function validateUser(req: Request, res: Response, next: NextFuncti
             res.status(401).json({error: 401, status});
         }
         res.locals.profile = profile;
+        req.userAuth = {valid, status, profile};
         next();
     } catch (err) {
         debug("testUser()", err.message)
