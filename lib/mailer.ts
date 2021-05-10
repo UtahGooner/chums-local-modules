@@ -1,27 +1,22 @@
 import Debug from 'debug';
+import {createTransport} from 'nodemailer';
+
 const debug = Debug('chums:lib:mailer');
 
-import {createTransport} from 'nodemailer';
-// import {SES, SESClient, CloneReceiptRuleSetCommand} from '@aws-sdk/client-ses';
-// import {SignatureV4, getSigningKey} from '@aws-sdk/signature-v4';
-// import {SendEmailCommandInput} from "@aws-sdk/client-ses/commands/SendEmailCommand";
-// import {Credentials} from "aws-sdk";
-// import {createHmac} from 'crypto';
-
-interface Address {
+export interface Address {
     name: string;
     address: string;
 }
 
 export interface sendMailProps {
-    to: string|string[],
-    cc?: string|string[],
-    bcc?: string|string[],
+    to: string | string[],
+    cc?: string | string[],
+    bcc?: string | string[],
     replyTo?: string,
     from?: string,
     subject?: string,
     html: string,
-    textContent?:string,
+    textContent?: string,
     attachments?: any,
 }
 
@@ -43,7 +38,17 @@ export interface sendMailProps {
  * @param {string} [textContent]
  * @param [attachments]
  */
-export const sendOldSESEmail = async ({to = [], cc = [], bcc = [], replyTo, from, subject, html, textContent, attachments}:sendMailProps) => {
+export const sendOldSESEmail = async ({
+                                          to = [],
+                                          cc = [],
+                                          bcc = [],
+                                          replyTo,
+                                          from,
+                                          subject,
+                                          html,
+                                          textContent,
+                                          attachments
+                                      }: sendMailProps) => {
     try {
         to = !Array.isArray(to) ? [to] : to;
         cc = !Array.isArray(cc) ? [cc] : cc;
@@ -58,7 +63,7 @@ export const sendOldSESEmail = async ({to = [], cc = [], bcc = [], replyTo, from
         }
 
         process.env.AWS_ACCESS_KEY_ID = process.env.AMAZON_SES_USERNAME;
-        process.env.AWS_SECRET_ACCESS_KEY  = process.env.AMAZON_SES_PASSWORD;
+        process.env.AWS_SECRET_ACCESS_KEY = process.env.AMAZON_SES_PASSWORD;
 
 
         const transporter = createTransport({
@@ -84,7 +89,7 @@ export const sendOldSESEmail = async ({to = [], cc = [], bcc = [], replyTo, from
 
         // return mailOptions;
         return await transporter.sendMail(mailOptions);
-    } catch(err) {
+    } catch (err) {
         debug("sendEmail()", err.message);
         return Promise.reject(err);
     }
@@ -112,60 +117,17 @@ export const getLogoImageAttachment = (ts = getTs36()) => {
     };
 };
 
-// export const sendSESEmail = async ({to = [], cc = [], bcc = [], replyTo, from, subject, html, textContent, attachments}:sendMailProps) => {
-//     if (!from) {
-//         from = `"Chums AutoMailer" <automated@chums.com>`;
-//     }
-//     if (!Array.isArray(to)) {
-//         to = [to];
-//     }
-//     if (!Array.isArray(cc)) {
-//         cc = [cc];
-//     }
-//     if (!Array.isArray(bcc)) {
-//         bcc = [bcc];
-//     }
-//     if (!textContent) {
-//         textContent = '';
-//     }
-//
-//     process.env.AWS_ACCESS_KEY_ID = process.env.AMAZON_SES_USERNAME;
-//     process.env.AWS_SECRET_ACCESS_KEY  = process.env.AMAZON_SES_PASSWORD;
-//
-//
-//     const credentials = new Credentials({accessKeyId: process.env.AMAZON_SES_USERNAME || '', secretAccessKey: process.env.AMAZON_SES_PASSWORD || ''});
-//
-//
-//
-//     const ses = new SES({
-//         region: process.env.AMAZON_SES_REGION,
-//         credentials: credentials,
-//     });
-//     const params:SendEmailCommandInput = {
-//         Source: from,
-//         Destination: {
-//             ToAddresses: to,
-//             CcAddresses: cc,
-//             BccAddresses: bcc,
-//         },
-//         Message: {
-//             Subject: {Data: subject},
-//             Body: {
-//                 Text: {Data: textContent},
-//                 Html: {Data: html},
-//             }
-//         }
-//     }
-//     // const command = new CloneReceiptRuleSetCommand(params)
-//
-//     const response = await ses.sendEmail(params);
-//     debug('sendSESEmail()', response);
-//     return response;
-//
-// }
-
-
-export const sendGmail  = async ({to = [], cc = [], bcc = [], replyTo, from, subject, html, textContent, attachments}:sendMailProps) => {
+export const sendGmail = async ({
+                                    to = [],
+                                    cc = [],
+                                    bcc = [],
+                                    replyTo,
+                                    from,
+                                    subject,
+                                    html,
+                                    textContent,
+                                    attachments
+                                }: sendMailProps) => {
     try {
         to = !Array.isArray(to) ? [to] : to;
         cc = !Array.isArray(cc) ? [cc] : cc;
@@ -203,7 +165,7 @@ export const sendGmail  = async ({to = [], cc = [], bcc = [], replyTo, from, sub
 
         // return mailOptions;
         return await transporter.sendMail(mailOptions);
-    } catch(err) {
+    } catch (err) {
         debug("sendGmail()", err.message);
         return Promise.reject(err);
     }

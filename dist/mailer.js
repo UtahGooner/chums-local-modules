@@ -11,8 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendEmail = exports.sendGmail = exports.getLogoImageAttachment = exports.getTs36 = exports.getTs = exports.sendOldSESEmail = void 0;
 const debug_1 = require("debug");
-const debug = debug_1.default('chums:lib:mailer');
 const nodemailer_1 = require("nodemailer");
+const debug = debug_1.default('chums:lib:mailer');
 /**
  * The following environment variables are required:
  *     <div>
@@ -94,57 +94,6 @@ const getLogoImageAttachment = (ts = exports.getTs36()) => {
     };
 };
 exports.getLogoImageAttachment = getLogoImageAttachment;
-// export const sendSESEmail = async ({to = [], cc = [], bcc = [], replyTo, from, subject, html, textContent, attachments}:sendMailProps) => {
-//     if (!from) {
-//         from = `"Chums AutoMailer" <automated@chums.com>`;
-//     }
-//     if (!Array.isArray(to)) {
-//         to = [to];
-//     }
-//     if (!Array.isArray(cc)) {
-//         cc = [cc];
-//     }
-//     if (!Array.isArray(bcc)) {
-//         bcc = [bcc];
-//     }
-//     if (!textContent) {
-//         textContent = '';
-//     }
-//
-//     process.env.AWS_ACCESS_KEY_ID = process.env.AMAZON_SES_USERNAME;
-//     process.env.AWS_SECRET_ACCESS_KEY  = process.env.AMAZON_SES_PASSWORD;
-//
-//
-//     const credentials = new Credentials({accessKeyId: process.env.AMAZON_SES_USERNAME || '', secretAccessKey: process.env.AMAZON_SES_PASSWORD || ''});
-//
-//
-//
-//     const ses = new SES({
-//         region: process.env.AMAZON_SES_REGION,
-//         credentials: credentials,
-//     });
-//     const params:SendEmailCommandInput = {
-//         Source: from,
-//         Destination: {
-//             ToAddresses: to,
-//             CcAddresses: cc,
-//             BccAddresses: bcc,
-//         },
-//         Message: {
-//             Subject: {Data: subject},
-//             Body: {
-//                 Text: {Data: textContent},
-//                 Html: {Data: html},
-//             }
-//         }
-//     }
-//     // const command = new CloneReceiptRuleSetCommand(params)
-//
-//     const response = await ses.sendEmail(params);
-//     debug('sendSESEmail()', response);
-//     return response;
-//
-// }
 const sendGmail = ({ to = [], cc = [], bcc = [], replyTo, from, subject, html, textContent, attachments }) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         to = !Array.isArray(to) ? [to] : to;
