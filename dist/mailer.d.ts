@@ -1,3 +1,7 @@
+export interface Address {
+    name: string;
+    address: string;
+}
 export interface sendMailProps {
     to: string | string[];
     cc?: string | string[];
