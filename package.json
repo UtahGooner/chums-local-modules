@@ -32,7 +32,7 @@
   "dependencies": {
     "debug": "^4.3.1",
     "dotenv": "^10.0.0",
-    "googleapis": "^75.0.0",
+    "googleapis": "^78.0.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",
     "named-placeholders": "^1.1.2",
