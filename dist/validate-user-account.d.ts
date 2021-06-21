@@ -12,3 +12,4 @@ export interface ValidateUserAccountProps {
     ARDivisionNo: string;
     CustomerNo: string;
 }
+export declare function validateUserAccount({ id, Company, ARDivisionNo, CustomerNo }: ValidateUserAccountProps): Promise<boolean>;

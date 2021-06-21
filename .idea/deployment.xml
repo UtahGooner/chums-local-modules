@@ -16,7 +16,21 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="MUKUNTUWEAP">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="oraibi.chums.com">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="www.progulus.com">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

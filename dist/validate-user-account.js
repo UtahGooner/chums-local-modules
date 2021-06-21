@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.validateUserAccount = void 0;
 const debug_1 = require("debug");
 const debug = debug_1.default('chums:local-modules:validate-user-account');
 const api_fetch_1 = require("./api-fetch");

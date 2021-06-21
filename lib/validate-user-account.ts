@@ -21,7 +21,8 @@ export interface ValidateUserAccountProps {
     ARDivisionNo: string,
     CustomerNo: string,
 }
-async function validateUserAccount({id, Company, ARDivisionNo, CustomerNo}:ValidateUserAccountProps) {
+
+export async function validateUserAccount({id, Company, ARDivisionNo, CustomerNo}:ValidateUserAccountProps) {
     try {
         const url = VALIDATE_URL
             .replace(':id', encodeURIComponent(id))
@@ -40,5 +41,3 @@ async function validateUserAccount({id, Company, ARDivisionNo, CustomerNo}:Valid
         return Promise.reject(err);
     }
 }
-
-exports.validateUserAccount = validateUserAccount;
