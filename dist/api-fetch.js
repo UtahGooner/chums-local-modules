@@ -16,11 +16,12 @@ const url_1 = require("url");
 const debug = debug_1.default('chums:local-modules:api-fetch');
 const { INTRANET_API_USERNAME = '', INTRANET_API_PASSWORD = '' } = process.env;
 const LOCAL_HOSTNAMES = ['localhost', 'intranet.chums.com'];
+const API_HOST = process.env.CHUMS_API_HOST || 'http://localhost';
 function apiFetch(url = '', options = {}) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             if (typeof url === 'string') {
-                url = new url_1.URL(url, 'https://intranet.chums.com/');
+                url = new url_1.URL(url, API_HOST);
             }
             if (!options.headers) {
                 options.headers = {};

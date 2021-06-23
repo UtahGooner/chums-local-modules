@@ -15,6 +15,7 @@ const debug = debug_1.default('chums:local-modules:validate-user');
 const node_fetch_1 = require("node-fetch");
 const auth_1 = require("./auth");
 const jwt_handler_1 = require("./jwt-handler");
+const API_HOST = process.env.CHUMS_API_HOST || 'http://localhost';
 /**
  * Requests validation from CHUMS /api/user service
  * - On success populates res.locals.profile = {user, roles, accounts} and executes next()
@@ -70,7 +71,7 @@ function loadValidation(req) {
             const headers = new node_fetch_1.Headers();
             headers.set('X-Forwarded-For', req.ip);
             headers.set('referrer', req.get('referrer') || req.originalUrl);
-            let url = 'http://localhost/api/user/validate';
+            let url = `${API_HOST}/api/user/validate`;
             if (!!user && !!pass) {
                 const credentials = Buffer.from(`${user}:${pass}`).toString('base64');
                 headers.set('Authorization', `Basic ${credentials}`);

@@ -7,6 +7,8 @@ import {basicAuth, jwtToken} from './auth';
 import {UserJWTToken, UserProfile, UserValidation} from "./types";
 import {validateToken, isBeforeExpiry, isLocalToken} from './jwt-handler';
 
+const API_HOST = process.env.CHUMS_API_HOST || 'http://localhost';
+
 
 
 /**
@@ -64,7 +66,7 @@ export async function loadValidation(req: Request): Promise<UserValidation> {
         headers.set('X-Forwarded-For', req.ip);
         headers.set('referrer', req.get('referrer') || req.originalUrl);
 
-        let url = 'http://localhost/api/user/validate';
+        let url = `${API_HOST}/api/user/validate`;
 
         if (!!user && !!pass) {
             const credentials = Buffer.from(`${user}:${pass}`).toString('base64');

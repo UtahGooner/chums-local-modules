@@ -13,8 +13,9 @@ MySQL | MYSQL_PASSWORD
 MySQL | MYSQL_DB
 Authentication | JWT_SECRET
 Authentication | JWT_ISSUER | | Used to validate if locally generated token
-Authentication | INTRANET_API_USERNAME | | used for API calls to /api/user
-Authentication | INTRANET_API_PASSWORD | | used for API calls to /api/user
+Authentication | CHUMS_API_HOST | http://localhost | used for calls to chums /api
+Authentication | CHUMS_API_USER | | used for API calls to /api/user
+Authentication | CHUMS_API_PASSWORD | | used for API calls to /api/user
 Sage100 | SAGE_QUERY_EXECUTABLE | | Required for sageQuery, requires that ODBC connections are established on server
 
 
