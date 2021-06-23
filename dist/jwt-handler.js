@@ -22,7 +22,11 @@ const ERR_TOKEN_EXPIRED = 'TokenExpiredError';
  */
 const validateToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        if (!exports.isLocalToken(token) && exports.isBeforeExpiry(token)) {
+        const payload = jsonwebtoken_1.decode(token);
+        if (!exports.isLocalToken(payload)) {
+            if (exports.isBeforeExpiry(token)) {
+                return payload;
+            }
             return Promise.reject(new Error('Invalid Token: token may be invalid or expired'));
         }
         return yield jsonwebtoken_1.verify(token, JWT_SECRET);
