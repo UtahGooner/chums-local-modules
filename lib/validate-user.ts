@@ -82,7 +82,7 @@ export async function loadValidation(req: Request): Promise<UserValidation> {
         }
 
         fetchOptions.headers = headers;
-        const response = await fetch(url, {headers});
+        const response = await fetch(url, fetchOptions);
         if (!response.ok) {
             return Promise.reject(new Error(`${response.status} ${response.statusText}`));
         }
