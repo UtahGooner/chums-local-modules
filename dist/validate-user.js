@@ -68,6 +68,7 @@ function loadValidation(req) {
             }
             const { user, pass } = auth_1.basicAuth(req);
             const session = req.cookies.PHPSESSID;
+            const fetchOptions = {};
             const headers = new node_fetch_1.Headers();
             headers.set('X-Forwarded-For', req.ip);
             headers.set('referrer', req.get('referrer') || req.originalUrl);
@@ -80,8 +81,12 @@ function loadValidation(req) {
                 url += `/${encodeURIComponent(session)}`;
             }
             else if (!!token) {
-                url = `http://localhost/api/user/validate/google/${encodeURIComponent(token)}`;
+                url = `http://localhost/api/user/validate/google`;
+                fetchOptions.method = 'POST';
+                fetchOptions.body = JSON.stringify({ token });
+                headers.set('Content-Type', 'application/json');
             }
+            fetchOptions.headers = headers;
             const response = yield node_fetch_1.default(url, { headers });
             if (!response.ok) {
                 return Promise.reject(new Error(`${response.status} ${response.statusText}`));

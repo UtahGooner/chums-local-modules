@@ -2,7 +2,7 @@ import Debug from 'debug';
 const debug = Debug('chums:local-modules:validate-user');
 
 import {NextFunction, Request, Response} from 'express'
-import {default as fetch, Headers} from 'node-fetch';
+import {default as fetch, Headers, RequestInit} from 'node-fetch';
 import {basicAuth, jwtToken} from './auth';
 import {UserJWTToken, UserProfile, UserValidation} from "./types";
 import {validateToken, isBeforeExpiry, isLocalToken} from './jwt-handler';
@@ -62,6 +62,7 @@ export async function loadValidation(req: Request): Promise<UserValidation> {
         const {user, pass} = basicAuth(req);
         const session = req.cookies.PHPSESSID;
 
+        const fetchOptions:RequestInit = {};
         const headers = new Headers();
         headers.set('X-Forwarded-For', req.ip);
         headers.set('referrer', req.get('referrer') || req.originalUrl);
@@ -74,8 +75,13 @@ export async function loadValidation(req: Request): Promise<UserValidation> {
         } else if (!!session) {
             url += `/${encodeURIComponent(session)}`;
         } else if (!!token) {
-            url = `http://localhost/api/user/validate/google/${encodeURIComponent(token)}`;
+            url = `http://localhost/api/user/validate/google`;
+            fetchOptions.method = 'POST';
+            fetchOptions.body = JSON.stringify({token});
+            headers.set('Content-Type', 'application/json');
         }
+
+        fetchOptions.headers = headers;
         const response = await fetch(url, {headers});
         if (!response.ok) {
             return Promise.reject(new Error(`${response.status} ${response.statusText}`));
