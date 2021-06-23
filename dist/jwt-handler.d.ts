@@ -1,3 +1,4 @@
+import { JwtPayload } from 'jsonwebtoken';
 import { BaseJWTToken } from "./types";
 /**
  * Validates a JTW Token
@@ -7,13 +8,9 @@ import { BaseJWTToken } from "./types";
 export declare const validateToken: (token: string) => Promise<BaseJWTToken>;
 /**
  * Validates a token expiration timestamp
- * @param {number} exp - Unix Timestamp
- * @returns {boolean}
  */
-export declare const isBeforeExpiry: ({ exp }: BaseJWTToken) => boolean;
+export declare const isBeforeExpiry: (payload: BaseJWTToken | JwtPayload | null | string) => boolean;
 /**
  * Checks to see if a token is locally issued
- * @param {String} token
- * @return {boolean}
  */
-export declare const isLocalToken: ({ iss }: BaseJWTToken) => boolean;
+export declare const isLocalToken: (payload: BaseJWTToken | JwtPayload | null | string) => boolean;

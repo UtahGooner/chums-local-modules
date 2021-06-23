@@ -1,5 +1,5 @@
 import Debug from 'debug';
-import {verify} from 'jsonwebtoken';
+import {verify, decode, JwtPayload} from 'jsonwebtoken';
 import {BaseJWTToken} from "./types";
 
 const debug = Debug('chums:local-modules:jwt-handler');
@@ -14,6 +14,9 @@ const ERR_TOKEN_EXPIRED = 'TokenExpiredError';
  */
 export const validateToken = async (token: string): Promise<BaseJWTToken> => {
     try {
+        if (!isLocalToken(token) && isBeforeExpiry(token)) {
+            return Promise.reject(new Error('Invalid Token: token may be invalid or expired'));
+        }
         return await verify(token, JWT_SECRET) as BaseJWTToken;
     } catch (err) {
         if (err.name !== ERR_TOKEN_EXPIRED) {
@@ -25,19 +28,29 @@ export const validateToken = async (token: string): Promise<BaseJWTToken> => {
 
 /**
  * Validates a token expiration timestamp
- * @param {number} exp - Unix Timestamp
- * @returns {boolean}
  */
-export const isBeforeExpiry = ({exp}: BaseJWTToken): boolean => {
+export const isBeforeExpiry = (payload: BaseJWTToken|JwtPayload|null|string): boolean => {
+    if (typeof payload === 'string') {
+        payload = decode(payload);
+    }
+    if (!payload || typeof payload === 'string') {
+        return false;
+    }
+    const {exp} = payload;
     const now = new Date().valueOf() / 1000;
     return !!exp && exp > now;
 }
 
 /**
  * Checks to see if a token is locally issued
- * @param {String} token
- * @return {boolean}
  */
-export const isLocalToken = ({iss}: BaseJWTToken): boolean => {
+export const isLocalToken = (payload: BaseJWTToken|JwtPayload|null|string): boolean => {
+    if (typeof payload === 'string') {
+        payload = decode(payload);
+    }
+    if (!payload || typeof payload === 'string') {
+        return false;
+    }
+    const {iss} = payload;
     return !!iss && iss === JWT_ISSUER;
 };

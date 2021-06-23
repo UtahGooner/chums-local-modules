@@ -22,6 +22,9 @@ const ERR_TOKEN_EXPIRED = 'TokenExpiredError';
  */
 const validateToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        if (!exports.isLocalToken(token) && exports.isBeforeExpiry(token)) {
+            return Promise.reject(new Error('Invalid Token: token may be invalid or expired'));
+        }
         return yield jsonwebtoken_1.verify(token, JWT_SECRET);
     }
     catch (err) {
@@ -34,20 +37,30 @@ const validateToken = (token) => __awaiter(void 0, void 0, void 0, function* () 
 exports.validateToken = validateToken;
 /**
  * Validates a token expiration timestamp
- * @param {number} exp - Unix Timestamp
- * @returns {boolean}
  */
-const isBeforeExpiry = ({ exp }) => {
+const isBeforeExpiry = (payload) => {
+    if (typeof payload === 'string') {
+        payload = jsonwebtoken_1.decode(payload);
+    }
+    if (!payload || typeof payload === 'string') {
+        return false;
+    }
+    const { exp } = payload;
     const now = new Date().valueOf() / 1000;
     return !!exp && exp > now;
 };
 exports.isBeforeExpiry = isBeforeExpiry;
 /**
  * Checks to see if a token is locally issued
- * @param {String} token
- * @return {boolean}
  */
-const isLocalToken = ({ iss }) => {
+const isLocalToken = (payload) => {
+    if (typeof payload === 'string') {
+        payload = jsonwebtoken_1.decode(payload);
+    }
+    if (!payload || typeof payload === 'string') {
+        return false;
+    }
+    const { iss } = payload;
     return !!iss && iss === JWT_ISSUER;
 };
 exports.isLocalToken = isLocalToken;
