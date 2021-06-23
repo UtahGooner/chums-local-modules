@@ -5,7 +5,7 @@ import {NextFunction, Request, Response} from 'express'
 import {default as fetch, Headers} from 'node-fetch';
 import {basicAuth, jwtToken} from './auth';
 import {UserJWTToken, UserProfile, UserValidation} from "./types";
-import {validateToken, isBeforeExpiry} from './jwt-handler';
+import {validateToken, isBeforeExpiry, isLocalToken} from './jwt-handler';
 
 
 
@@ -35,6 +35,7 @@ export async function validateUser(req: Request, res: Response, next: NextFuncti
     }
 }
 
+
 /**
  * Executes validation request
  *  - validates JWT token from Authorization header "Bearer asdasd...asd" (from a standalone/web app)
@@ -48,7 +49,7 @@ export async function loadValidation(req: Request): Promise<UserValidation> {
         const {token} = jwtToken(req);
         if (token) {
             const decoded = await validateToken(token) as UserJWTToken;
-            if (isBeforeExpiry(decoded)) {
+            if (isLocalToken(decoded) && isBeforeExpiry(decoded)) {
                 const {user, roles = [], accounts = []} = decoded;
                 user.roles = roles
                 user.accounts = accounts;
@@ -58,6 +59,7 @@ export async function loadValidation(req: Request): Promise<UserValidation> {
 
         const {user, pass} = basicAuth(req);
         const session = req.cookies.PHPSESSID;
+
         const headers = new Headers();
         headers.set('X-Forwarded-For', req.ip);
         headers.set('referrer', req.get('referrer') || req.originalUrl);
@@ -69,6 +71,8 @@ export async function loadValidation(req: Request): Promise<UserValidation> {
             headers.set('Authorization', `Basic ${credentials}`);
         } else if (!!session) {
             url += `/${encodeURIComponent(session)}`;
+        } else if (!!token) {
+            url = `http://localhost/api/user/validate/google/${encodeURIComponent(token)}`;
         }
         const response = await fetch(url, {headers});
         if (!response.ok) {

@@ -58,7 +58,7 @@ function loadValidation(req) {
             const { token } = auth_1.jwtToken(req);
             if (token) {
                 const decoded = yield jwt_handler_1.validateToken(token);
-                if (jwt_handler_1.isBeforeExpiry(decoded)) {
+                if (jwt_handler_1.isLocalToken(decoded) && jwt_handler_1.isBeforeExpiry(decoded)) {
                     const { user, roles = [], accounts = [] } = decoded;
                     user.roles = roles;
                     user.accounts = accounts;
@@ -77,6 +77,9 @@ function loadValidation(req) {
             }
             else if (!!session) {
                 url += `/${encodeURIComponent(session)}`;
+            }
+            else if (!!token) {
+                url = `http://localhost/api/user/validate/google/${encodeURIComponent(token)}`;
             }
             const response = yield node_fetch_1.default(url, { headers });
             if (!response.ok) {
