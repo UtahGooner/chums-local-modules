@@ -39,7 +39,7 @@ function validateUser(req, res, next) {
             next();
         }
         catch (err) {
-            debug("testUser()", err.message);
+            debug("validateUser()", err.message);
             res.status(401).json({ error: 'Not authorized', message: err.message });
         }
     });
@@ -87,7 +87,6 @@ function loadValidation(req) {
                 headers.set('Content-Type', 'application/json');
             }
             fetchOptions.headers = headers;
-            debug('loadValidation()', fetchOptions.method, url);
             const response = yield node_fetch_1.default(url, fetchOptions);
             if (!response.ok) {
                 return Promise.reject(new Error(`${response.status} ${response.statusText}`));

@@ -32,7 +32,7 @@ export async function validateUser(req: Request, res: Response, next: NextFuncti
         req.userAuth = {valid, status, profile};
         next();
     } catch (err) {
-        debug("testUser()", err.message)
+        debug("validateUser()", err.message)
         res.status(401).json({error: 'Not authorized', message: err.message});
     }
 }
@@ -82,7 +82,6 @@ export async function loadValidation(req: Request): Promise<UserValidation> {
         }
 
         fetchOptions.headers = headers;
-        debug('loadValidation()', fetchOptions.method, url);
         const response = await fetch(url, fetchOptions);
         if (!response.ok) {
             return Promise.reject(new Error(`${response.status} ${response.statusText}`));
