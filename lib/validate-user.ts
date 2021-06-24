@@ -75,13 +75,14 @@ export async function loadValidation(req: Request): Promise<UserValidation> {
         } else if (!!session) {
             url += `/${encodeURIComponent(session)}`;
         } else if (!!token) {
-            url = `http://localhost/api/user/validate/google`;
-            fetchOptions.method = 'POST';
+            url += '/google';
+            fetchOptions.method = 'post';
             fetchOptions.body = JSON.stringify({token});
             headers.set('Content-Type', 'application/json');
         }
 
         fetchOptions.headers = headers;
+        debug('loadValidation()', fetchOptions.method, url);
         const response = await fetch(url, fetchOptions);
         if (!response.ok) {
             return Promise.reject(new Error(`${response.status} ${response.statusText}`));

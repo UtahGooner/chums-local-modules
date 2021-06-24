@@ -81,12 +81,13 @@ function loadValidation(req) {
                 url += `/${encodeURIComponent(session)}`;
             }
             else if (!!token) {
-                url = `http://localhost/api/user/validate/google`;
-                fetchOptions.method = 'POST';
+                url += '/google';
+                fetchOptions.method = 'post';
                 fetchOptions.body = JSON.stringify({ token });
                 headers.set('Content-Type', 'application/json');
             }
             fetchOptions.headers = headers;
+            debug('loadValidation()', fetchOptions.method, url);
             const response = yield node_fetch_1.default(url, fetchOptions);
             if (!response.ok) {
                 return Promise.reject(new Error(`${response.status} ${response.statusText}`));
