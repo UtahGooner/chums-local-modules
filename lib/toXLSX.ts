@@ -1,6 +1,6 @@
 import Debug from 'debug';
 const debug = Debug('chums:local-modules:toXLSX');
-import {utils, WorkSheet, write, WritingOptions} from 'xlsx';
+import {utils, WorkSheet, write, WritingOptions, SheetAOAOpts} from 'xlsx';
 import {RowDataPacket} from "mysql2";
 
 export interface ColumnNames {
@@ -11,7 +11,7 @@ export interface WorkBookSheets {
     [key:string]: WorkSheet,
 }
 
-export function resultToExcelSheet(data:RowDataPacket[], columnNames:ColumnNames, onlyColumnNames:boolean):WorkSheet {
+export function parseDataForAOA(data:RowDataPacket[], columnNames: ColumnNames, onlyColumnNames: boolean):any[][] {
     let rows:any[] = [];
     let fields:string[] = [];
     let columns:string[] = [];
@@ -39,7 +39,16 @@ export function resultToExcelSheet(data:RowDataPacket[], columnNames:ColumnNames
             ];
         }
     }
+    return rows;
+}
+
+export function resultToExcelSheet(data:RowDataPacket[], columnNames:ColumnNames, onlyColumnNames:boolean):WorkSheet {
+    let rows:any[] = parseDataForAOA(data, columnNames, onlyColumnNames);
     return utils.aoa_to_sheet(rows);
+}
+
+export function addResultToExcelSheet(workSheet:WorkSheet, newData:any[][], options:SheetAOAOpts):WorkSheet {
+    return utils.sheet_add_aoa(workSheet, newData, options);
 }
 
 export function buildWorkBook(sheets:WorkBookSheets, options:WritingOptions = {}):any {

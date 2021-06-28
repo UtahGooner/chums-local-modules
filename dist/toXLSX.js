@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildXLSXHeaders = exports.buildWorkBook = exports.resultToExcelSheet = void 0;
+exports.buildXLSXHeaders = exports.buildWorkBook = exports.addResultToExcelSheet = exports.resultToExcelSheet = exports.parseDataForAOA = void 0;
 const debug_1 = require("debug");
 const debug = debug_1.default('chums:local-modules:toXLSX');
 const xlsx_1 = require("xlsx");
-function resultToExcelSheet(data, columnNames, onlyColumnNames) {
+function parseDataForAOA(data, columnNames, onlyColumnNames) {
     let rows = [];
     let fields = [];
     let columns = [];
@@ -33,9 +33,18 @@ function resultToExcelSheet(data, columnNames, onlyColumnNames) {
             ];
         }
     }
+    return rows;
+}
+exports.parseDataForAOA = parseDataForAOA;
+function resultToExcelSheet(data, columnNames, onlyColumnNames) {
+    let rows = parseDataForAOA(data, columnNames, onlyColumnNames);
     return xlsx_1.utils.aoa_to_sheet(rows);
 }
 exports.resultToExcelSheet = resultToExcelSheet;
+function addResultToExcelSheet(workSheet, newData, options) {
+    return xlsx_1.utils.sheet_add_aoa(workSheet, newData, options);
+}
+exports.addResultToExcelSheet = addResultToExcelSheet;
 function buildWorkBook(sheets, options = {}) {
     const defaultOptions = {
         type: 'buffer',
