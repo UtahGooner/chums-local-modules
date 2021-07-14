@@ -4,7 +4,7 @@ import {URL} from 'url'
 
 const debug = Debug('chums:local-modules:api-fetch');
 
-const {INTRANET_API_USERNAME = '', INTRANET_API_PASSWORD = ''} = process.env;
+const {CHUMS_API_USER = '', CHUMS_API_PASSWORD = ''} = process.env;
 const LOCAL_HOSTNAMES = ['localhost', 'intranet.chums.com'];
 const API_HOST = process.env.CHUMS_API_HOST || 'http://localhost';
 
@@ -48,7 +48,10 @@ export async function apiFetch(url: string | URL = '', options: APIFetchOptions 
             delete options.referrer;
         }
         if (!options.headers.Authorization && LOCAL_HOSTNAMES.includes(url.hostname)) {
-            const auth = Buffer.from(`${INTRANET_API_USERNAME}:${INTRANET_API_PASSWORD}`).toString('base64');
+            if (!CHUMS_API_USER || !CHUMS_API_PASSWORD) {
+                debug('apiFetch() WARNING: session variables CHUMS_API_USER, CHUMS_API_PASSWORD not set.');
+            }
+            const auth = Buffer.from(`${CHUMS_API_USER}:${CHUMS_API_PASSWORD}`).toString('base64');
             options.headers.Authorization = `Basic ${auth}`;
         }
         return await fetch(url, options);

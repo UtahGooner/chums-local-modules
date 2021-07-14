@@ -14,7 +14,7 @@ const debug_1 = require("debug");
 const node_fetch_1 = require("node-fetch");
 const url_1 = require("url");
 const debug = debug_1.default('chums:local-modules:api-fetch');
-const { INTRANET_API_USERNAME = '', INTRANET_API_PASSWORD = '' } = process.env;
+const { CHUMS_API_USER = '', CHUMS_API_PASSWORD = '' } = process.env;
 const LOCAL_HOSTNAMES = ['localhost', 'intranet.chums.com'];
 const API_HOST = process.env.CHUMS_API_HOST || 'http://localhost';
 function apiFetch(url = '', options = {}) {
@@ -35,7 +35,10 @@ function apiFetch(url = '', options = {}) {
                 delete options.referrer;
             }
             if (!options.headers.Authorization && LOCAL_HOSTNAMES.includes(url.hostname)) {
-                const auth = Buffer.from(`${INTRANET_API_USERNAME}:${INTRANET_API_PASSWORD}`).toString('base64');
+                if (!CHUMS_API_USER || !CHUMS_API_PASSWORD) {
+                    debug('apiFetch() WARNING: session variables CHUMS_API_USER, CHUMS_API_PASSWORD not set.');
+                }
+                const auth = Buffer.from(`${CHUMS_API_USER}:${CHUMS_API_PASSWORD}`).toString('base64');
                 options.headers.Authorization = `Basic ${auth}`;
             }
             return yield node_fetch_1.default(url, options);
